@@ -1,19 +1,119 @@
-## Tasks
-## 0. Django Project Setup with API Documentation and Database Configuration
+# alx\_travel\_app\_0x00
 
-### Objective
-- Set up the Django project with the necessary dependencies, configure the database, and add `Swagger` for API documentation.
+A Django-based travel booking application that allows users to create property **listings**, make **bookings**, and leave **reviews**.
 
-### Instructions:
-- Create a Django Project:
-    - Set up a new Django project named `alx_travel_app`.
-    - Create an app within the project named `listings`.
-    - Install necessary packages, including `django`, `djangorestframework`, `django-cors- headers`, `celery`, `rabbitmq`, and `drf-yasg` for Swagger documentation.
-- Configure Settings:
-    - In `settings.py`, configure the project for REST framework and CORS headers.
-        - Set up the database configuration to use MYSQL. Use environment variables for sensitive information such as database credentials. (Hint: Use the `django-environ` package to handle `.env` files).
-- Add Swagger:
-    - Install `drf-yasg` for Swagger documentation.
-    - Configure Swagger to automatically document all APIs. The documentation should be available at `/swagger/`.
-- Initialize Git Repository:
-    - Initialize a Git repository and make your initial commit with the project setup files.
+---
+
+## Features
+
+* **User Authentication** – Each listing, booking, and review is tied to a registered user.
+* **Listings** – Hosts can create and manage property listings.
+* **Bookings** – Guests can book available listings with defined check-in and check-out dates.
+* **Reviews** – Guests can leave reviews (rating + comments) for listings.
+* **Seeder Command** – Pre-populate the database with sample listings for quick testing.
+
+---
+
+## Installation & Setup
+
+1. **Clone the Repository**
+
+   ```bash
+   git clone https://github.com/your-username/alx_travel_app_0x00.git
+   cd alx_travel_app_0x00/alx_travel_app
+   ```
+
+2. **Create Virtual Environment**
+
+   ```bash
+   python3 -m venv venv
+   source venv/bin/activate
+   ```
+
+3. **Install Dependencies**
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Apply Migrations**
+
+   ```bash
+   python manage.py makemigrations
+   python manage.py migrate
+   ```
+
+5. **Run Development Server**
+
+   ```bash
+   python manage.py runserver
+   ```
+
+   Visit [http://127.0.0.1:8000/](http://127.0.0.1:8000/)
+
+---
+
+## Models Overview
+
+### Listing
+
+* `listing_id` (UUID, primary key)
+* `host` (ForeignKey → User)
+* `title`, `description`, `price_per_night`, `location`
+* `created_at`
+
+### Booking
+
+* `booking_id` (UUID, primary key)
+* `listing` (ForeignKey → Listing)
+* `user` (ForeignKey → User)
+* `check_in`, `check_out`
+* `status` (pending, confirmed, canceled)
+* `created_at`
+
+### Review
+
+* `review_id` (UUID, primary key)
+* `listing` (ForeignKey → Listing)
+* `user` (ForeignKey → User)
+* `rating` (1–5)
+* `comment`
+* `created_at`
+
+---
+
+## Seeding Data
+
+The project includes a management command to seed the database with sample listings.
+
+Run:
+
+```bash
+python manage.py seed
+```
+
+This will create a demo host and populate the database with a few property listings.
+
+---
+
+## Tech Stack
+
+* **Backend**: Django (Python)
+* **Database**: MySQL (default, configurable in `settings.py`)
+* **API**: Django REST Framework (DRF)
+
+---
+
+## Next Steps / Improvements
+
+* Add API endpoints for Listings, Bookings, and Reviews.
+* Implement authentication (JWT / DRF auth).
+* Add availability validation for bookings.
+* Build frontend integration (React / Vue).
+
+---
+
+## Author
+
+Developed as part of ALX Backend Python projects
+
